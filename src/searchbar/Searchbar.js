@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { ImageGallery } from './imageGallery/ImageGallery';
-import css from './Searchbar.module.css';
 import { Button } from './button/Button';
+import css from './Searchbar.module.css';
 
 export class Searchbar extends Component {
   state = {
@@ -9,8 +9,6 @@ export class Searchbar extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate BAR');
-
     if (prevProps.pageNumber > 2) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
@@ -38,7 +36,7 @@ export class Searchbar extends Component {
     const { searchQuery } = this.state;
     const { images, updateQuery } = this.props;
     return (
-      <Fragment>
+      <>
         <header className={css.Searchbar}>
           <form onSubmit={this.handleSubmit} className={css.SearchForm}>
             <button type="submit" className={css.SearchFormButton}>
@@ -60,10 +58,10 @@ export class Searchbar extends Component {
           </form>
         </header>
         {images.length > 0 && <ImageGallery images={images} />}
-        {images.length >= 11 && (
+        {images.length > 11 && (
           <Button handleClickButton={this.handleClickButton} />
         )}
-      </Fragment>
+      </>
     );
   }
 }

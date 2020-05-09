@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import * as imagesAPI from './services/images-api.js';
 import { Searchbar } from './searchbar/Searchbar';
-import css from './App.css';
 import { ErrorNotification } from './searchbar/errorNotification/ErrorNotification';
 import { CustomLoader } from './searchbar/loader/CustomLoader';
-import * as imagesAPI from './services/images-api.js';
+import css from './App.css';
 
 const initialState = {
   images: [],
@@ -39,9 +39,8 @@ export class App extends Component {
     });
   };
 
-  getImg = async searchQuery => {
+  getImages = async searchQuery => {
     this.setState({ isLoading: true });
-
     try {
       const takeImages = await imagesAPI.fetchImages(
         searchQuery,
@@ -60,24 +59,13 @@ export class App extends Component {
     }
   };
 
-  // ///////////////// Modal /////////////////
-  // onOpenModal = () => {
-  // 	console.log('openModal');
-  // 	this.setState({ isModalOpen: true });
-  // };
-
-  // onCloseModal = () => {
-  // 	console.log('closeModal');
-  // 	this.setState({ isModalOpen: false });
-  // };
-
   render() {
     const { images, isLoading, error, pageNumber } = this.state;
     return (
       <div className={css.App}>
         <Searchbar
           initialState={initialState}
-          onSubmit={this.getImg}
+          onSubmit={this.getImages}
           images={images}
           pageNumber={pageNumber}
           updateQuery={this.updateQuery}
